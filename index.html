@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashwanth Senthil | NasaDude</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background-color: #050510; /* Deep space black/blue */
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+        }
+
+        /* Container for background stars and distant meteors */
+        #space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Container for foreground rare meteors */
+        #space-fg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .main-logo {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(186, 85, 211, 0.6));
+            margin-top: 2rem;
+        }
+
+        .username {
+            color: #00ffff;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+            margin: 0;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .title-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Minecraft-style splash text styling */
+        .splash-container {
+            position: absolute;
+            top: -60px;
+            right: -260px;
+            transform: rotate(-20deg);
+            z-index: 20;
+        }
+
+        #splash-text {
+            color: #ffff00;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 0px #3f3f00;
+            animation: pulse 0.5s infinite alternate;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(186, 85, 211, 0.3);
+        }
+
+        h2 {
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            margin-top: 0;
+        }
+
+        .project-card h3 {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            margin-bottom: 0.2rem;
+        }
+
+        .status {
+            color: #00ff00;
+            font-size: 0.9rem;
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        /* Keyframe Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        /* Meteor CSS applied via JavaScript */
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 70px;
+            background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));
+            border-radius: 50%;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .meteor-fg {
+            width: 4px; /* Foreground meteors are thicker */
+            height: 120px;
+            background: linear-gradient(to top, #00ffff, rgba(0,255,255,0));
+            filter: drop-shadow(0 0 8px #00ffff);
+            z-index: 999;
+        }
+
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 1; }
+            100% { transform: translateX(-2000px) translateY(2000px) rotate(45deg); opacity: 0; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            #splash-text {
+                font-size: 1.1rem;
+            }
+            .content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background container for stars and distant meteors -->
+    <div id="space-bg"></div>
+
+    <main class="content">
+        <header>
+            <!-- Uploaded Image Reference -->
+            <img src="AshwanthSenthil.png" alt="Ashwanth Senthil Logo" class="main-logo">
+            
+            <div class="title-wrapper">
+                <h1 class="username">@nasadude</h1>
+                <!-- Splash text container -->
+                <div class="splash-container">
+                    <p id="splash-text">Loading...</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="about">
+            <h2>About Me</h2>
+            <p>Hey guys, I'm Ashwanth Senthil, also known as <strong>NasaDude</strong>. I mainly play minecraft and like to code.</p>
+            <p>I am currently still a teen so dont expect to much from me</p>
+            <p>I am working on Edulearn with a friend of mine (Konkor) so make sure to give it a try</p>
+        </section>
+
+        <section class="projects">
+            <h2>Active Projects</h2>
+            <div class="project-card">
+                <h3>Project: EduLearn</h3>
+                <p class="status">Finished but will recieve weekly updates</p>
+                <p>Edulearn, a place where a gamer can be a gamer. A game library filled with over 3000+ games and a proxy which works like magic. Currently we get upwards of 5k+ active users per day.<em></em></p>
+                <p>edulearnschool.vercel.app</p>
+                <p>easyeducation.global.ssl.fastly.net</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Foreground container for rare, close-up meteors -->
+    <div id="space-fg"></div>
+
+    <script>
+        // --- Splash Text Logic ---
+        const splashTexts = [
+            "Made by NasaDude",
+            "This is my Website",
+            "edulearnschool.vercel.app",
+            "I made this!"
+        ];
+
+        function setRandomSplash() {
+            const splashEl = document.getElementById('splash-text');
+            const randomIndex = Math.floor(Math.random() * splashTexts.length);
+            splashEl.innerText = splashTexts[randomIndex];
+        }
+
+        // Run immediately on load
+        setRandomSplash();
+
+        // Optional: click the splash text to change it manually
+        document.getElementById('splash-text').addEventListener('click', setRandomSplash);
+        document.getElementById('splash-text').style.cursor = 'pointer';
+
+        // --- Meteor Generation Logic ---
+        function createMeteor(isForeground = false) {
+            const meteor = document.createElement('div');
+            meteor.classList.add('meteor');
+            
+            if (isForeground) {
+                meteor.classList.add('meteor-fg');
+            }
+
+            // Start anywhere across the top or far right side (to account for diagonal movement)
+            meteor.style.left = (Math.random() * 200) + 'vw';
+            meteor.style.top = '-150px';
+
+            // Randomize speed based on depth (Foreground is faster)
+            const minDuration = isForeground ? 0.6 : 1.2;
+            const maxDuration = isForeground ? 1.2 : 2.5;
+            const duration = Math.random() * (maxDuration - minDuration) + minDuration;
+            
+            meteor.style.animation = `shoot ${duration}s linear`;
+
+            // Add to the correct layer
+            const containerId = isForeground ? 'space-fg' : 'space-bg';
+            document.getElementById(containerId).appendChild(meteor);
+
+            // Clean up the DOM after the animation finishes
+            setTimeout(() => {
+                meteor.remove();
+            }, duration * 1000);
+        }
+
+        // Spawner for Background Meteors (More common)
+        setInterval(() => {
+            // 50% chance to spawn a meteor every 2 seconds
+            if (Math.random() > 0.5) { 
+                createMeteor(false);
+            }
+        }, 2000);
+
+        // Spawner for Foreground Meteors (Rare)
+        setInterval(() => {
+            // 20% chance to spawn a foreground meteor every 4 seconds
+            if (Math.random() > 0.80) { 
+                createMeteor(true);
+            }
+        }, 4000);
+    </script>
+</body>
+</html>
+
